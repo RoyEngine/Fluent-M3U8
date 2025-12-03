@@ -12,9 +12,10 @@ from qfluentwidgets import FluentIcon as FIF
 from .setting_interface import SettingInterface
 from .home_interface import HomeInterface
 from .task_interface import TaskInterface
+from .localization_inheritance_interface import LocalizationInheritanceInterface
 from ..common.database import DBInitializer, DatabaseThread, sqlSignalBus, SqlResponse
 from ..common.config import cfg
-from ..common.icon import Icon
+from ..common.icon import Icon, Logo
 from ..common.utils import openUrl
 from ..common.concurrent import TaskExecutor
 from ..service.version_service import VersionService
@@ -39,6 +40,7 @@ class MainWindow(MSFluentWindow):
         self.homeInterface = HomeInterface(self)
         self.taskInterface = TaskInterface(self)
         self.settingInterface = SettingInterface(self)
+        self.localizationInterface = LocalizationInheritanceInterface(self)
         self.systemTrayIcon = SystemTrayIcon(self)
 
         self.connectSignalToSlot()
@@ -63,6 +65,8 @@ class MainWindow(MSFluentWindow):
 
     def initNavigation(self):
         self.addSubInterface(self.homeInterface, FIF.HOME, self.tr('Home'), FIF.HOME_FILL, isTransparent=True)
+        self.addSubInterface(
+            self.localizationInterface, Logo.GLOBE, self.tr('Localization'), Logo.GLOBE, isTransparent=True)
         self.addSubInterface(self.taskInterface, Icon.CLOUD_DOWNLOAD, self.tr('Task'), Icon.CLOUD_DOWNLOAD_FILLED)
 
         self.navigationInterface.addItem(
